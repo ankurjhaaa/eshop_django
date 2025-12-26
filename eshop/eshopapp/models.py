@@ -24,8 +24,9 @@ class Product(models.Model):
     mrp = models.DecimalField(max_digits=10, decimal_places=2)
     selling_price = models.DecimalField(max_digits=10, decimal_places=2)
     stock = models.IntegerField()
-    image = models.ImageField(null=True,blank=True)
+    image = models.ImageField(upload_to="photos/",null=True,blank=True)
     description = models.TextField()
     
     def __str__(self):
         return self.name
+ 

@@ -1,0 +1,65 @@
+{% extends 'layout/publiclayout.html' %}
+
+{% block title %}
+  product view
+{% endblock %}
+
+{% block content %}
+  <section class="max-w-7xl mx-auto px-4 py-10">
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-10">
+      <div class="bg-white rounded-2xl shadow-sm p-4">
+        <img src="{{product.image.url}}" alt="Product Image" class="w-full h-[420px] object-cover rounded-xl" />
+      </div>
+
+      <div class="bg-white rounded-2xl shadow-sm p-6">
+        <p class="text-sm text-indigo-600 font-medium mb-2">{{product.cat_id}}</p>
+
+        <h1 class="text-3xl font-bold mb-3">{{product.name}}</h1>
+
+        <div class="flex items-center gap-2 text-sm text-gray-500 mb-4">
+          ⭐⭐⭐⭐☆ <span>(124 reviews)</span>
+        </div>
+
+        <div class="flex items-center gap-3 mb-5">
+          <span class="text-3xl font-bold text-indigo-600">₹{{product.selling_price}}</span>
+          <span class="text-gray-400 line-through">₹{{product.mrp}}</span>
+          <span class="text-green-600 text-sm font-medium">25% OFF</span>
+        </div>
+
+        <p class="text-gray-600 mb-6 leading-relaxed">High-quality wireless headphones with noise cancellation, deep bass, and long battery life. Perfect for music lovers and professionals.</p>
+
+        <p class="text-sm mb-6">
+          <span class="font-medium">Availability:</span>
+          <span class="text-green-600">In Stock</span>
+        </p>
+
+        <div class="flex items-center gap-4 mb-6">
+          <span class="font-medium">Quantity</span>
+          <div class="flex items-center border rounded-lg">
+            <button class="px-3 py-1 text-lg">−</button>
+            <span class="px-4">1</span>
+            <button class="px-3 py-1 text-lg">+</button>
+          </div>
+        </div>
+
+        <div class="flex gap-4">
+          <button class="flex-1 bg-indigo-600 text-white py-3 rounded-xl font-semibold hover:bg-indigo-700 transition">Add to Cart</button>
+
+          <button class="flex items-center justify-center px-4 py-3 rounded-xl border hover:bg-gray-100 transition">❤️</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- ================= EXTRA INFO ================= -->
+    <div class="mt-12 bg-white rounded-2xl shadow-sm p-6">
+      <h2 class="text-xl font-bold mb-4">Product Details</h2>
+
+      <ul class="list-disc list-inside text-gray-600 space-y-2">
+        <li>Bluetooth 5.0 connectivity</li>
+        <li>Up to 20 hours battery life</li>
+        <li>Fast charging support</li>
+        <li>Comfortable over-ear design</li>
+      </ul>
+    </div>
+  </section>
+{% endblock %}
