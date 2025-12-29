@@ -27,9 +27,7 @@
       <!-- Category Card -->
 
       {% for category in categories %}
-        <div class="min-w-[120px] bg-white rounded-xl shadow-sm px-3 py-4 text-center hover:shadow-md transition cursor-pointer">
-          <h3 class="font-semibold text-sm">{{ category.name }}</h3>
-        </div>
+        <a href="/shop?category={{category.slug}}" class="min-w-[120px] bg-white rounded-xl shadow-sm px-3 py-4 text-center hover:shadow-md transition cursor-pointer"><h3 class="font-semibold text-sm">{{ category.name }}</h3></a>
       {% endfor %}
     </div>
   </section>

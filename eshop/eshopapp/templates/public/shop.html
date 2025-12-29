@@ -1,0 +1,86 @@
+{% extends 'layout/publiclayout.html' %}
+
+{% block title %}
+Shop
+{% endblock %}
+
+{% block content %}
+<div class="max-w-7xl mx-auto px-4 py-10">
+    <!-- TOP BAR -->
+    <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-4 mb-8">
+        <h1 class="text-2xl font-semibold">Shop</h1>
+
+        <!-- Search -->
+        <input type="text" placeholder="Search products..."
+            class="w-full md:w-80 border rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-indigo-500" />
+    </div>
+
+    <div class="grid grid-cols-1 lg:grid-cols-4 gap-8">
+        <!-- LEFT: Filters -->
+        <div class="border rounded-lg p-6 space-y-6">
+            <!-- Category Filter -->
+            <div>
+                <h3 class="font-medium mb-3">Categories</h3>
+                <div class="space-y-2 text-sm">
+                    <label class="flex items-center gap-2">
+                        <input type="checkbox" class="accent-indigo-600" />
+                        <span>Electronics</span>
+                    </label>
+                    <label class="flex items-center gap-2">
+                        <input type="checkbox" class="accent-indigo-600" />
+                        <span>Fashion</span>
+                    </label>
+                    <label class="flex items-center gap-2">
+                        <input type="checkbox" class="accent-indigo-600" />
+                        <span>Home & Kitchen</span>
+                    </label>
+                    <label class="flex items-center gap-2">
+                        <input type="checkbox" class="accent-indigo-600" />
+                        <span>Books</span>
+                    </label>
+                </div>
+            </div>
+
+            <!-- Price Filter -->
+            <div>
+                <h3 class="font-medium mb-3">Price Range</h3>
+                <div class="space-y-3">
+                    <input type="range" class="w-full" />
+                    <div class="flex justify-between text-sm text-gray-500">
+                        <span>₹0</span>
+                        <span>₹5000+</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Filter Button -->
+            <button class="w-full bg-indigo-600 hover:bg-indigo-700 text-white py-2 rounded-lg text-sm">Apply
+                Filters</button>
+        </div>
+
+        <!-- RIGHT: Product Grid -->
+        <div class="lg:col-span-3">
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+                <!-- Product Card -->
+
+                {% for product in products %}
+                <div class="border rounded-lg p-4 hover:shadow transition">
+                    <div class="h-48 bg-gray-100 rounded mb-4">
+                        <img src="{{product.image.url}}" class="w-full h-full" alt="" srcset="">
+                    </div>
+                    <h3 class="font-medium text-lg">{{product.name}}</h3>
+                    <p class="text-sm text-gray-500 mb-2">{{product.cat_id}}</p>
+                    <div class="flex items-center gap-2 mb-3">
+                        <span class="font-semibold text-indigo-600">₹{{product.selling_price}}</span>
+                        <span class="text-sm line-through text-gray-400">₹{{product.mrp}}</span>
+                        <span class="text-xs text-green-600">25% OFF</span>
+                    </div>
+                    <button class="w-full bg-indigo-600 hover:bg-indigo-700 text-white py-2 rounded-lg text-sm">Add to
+                        Cart</button>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

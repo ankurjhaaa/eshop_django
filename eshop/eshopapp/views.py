@@ -43,9 +43,22 @@ def logoutpage(request):
     return redirect("home")
 
 
+def cartpage(request):
+    return render(request, "public/cart.html")
+
+
 def productview(request, slug):
     return render(
         request,
         "public/productview.html",
         {"product": Product.objects.filter(slug=slug).first},
     )
+
+
+def shoppage(request):
+    products = Product.objects.all()
+    categoryFilter = request.GET.get("category")
+    if categoryFilter:
+        catId = Category.objects.filter(slug=categoryFilter)
+        products = Product.objects.filter(cat_id=catId)
+    return render(request, "public/shop.html", {"products": products})

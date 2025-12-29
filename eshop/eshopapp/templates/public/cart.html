@@ -1,0 +1,102 @@
+{% extends 'layout/publiclayout.html' %}
+
+{% block title %}
+  Cart
+{% endblock %}
+
+{% block content %}
+  <div class="max-w-7xl mx-auto px-4 py-10">
+    <h1 class="text-2xl font-semibold mb-8">Shopping Cart</h1>
+
+    <!-- CART WITH ITEMS -->
+    <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+      <!-- LEFT: Cart Items -->
+      <div class="lg:col-span-2 space-y-6">
+        <!-- Cart Item -->
+        <div class="flex gap-4 border rounded-lg p-4 items-center">
+          <!-- Image -->
+          <div class="w-24 h-24 bg-gray-100 rounded"></div>
+
+          <!-- Details -->
+          <div class="flex-1">
+            <h3 class="font-medium text-lg">Product Name</h3>
+            <p class="text-sm text-gray-500">₹750 each</p>
+
+            <!-- Quantity Controls -->
+            <div class="flex items-center gap-3 mt-3">
+              <button class="w-8 h-8 border rounded hover:bg-gray-100">−</button>
+              <span class="px-3 py-1 border rounded">1</span>
+              <button class="w-8 h-8 border rounded hover:bg-gray-100">+</button>
+            </div>
+          </div>
+
+          <!-- Price + Remove -->
+          <div class="text-right">
+            <p class="font-semibold text-indigo-600">₹750</p>
+            <button class="text-sm text-red-500 hover:underline mt-2">Remove</button>
+          </div>
+        </div>
+
+        <!-- Cart Item -->
+        <div class="flex gap-4 border rounded-lg p-4 items-center">
+          <div class="w-24 h-24 bg-gray-100 rounded"></div>
+
+          <div class="flex-1">
+            <h3 class="font-medium text-lg">Another Product</h3>
+            <p class="text-sm text-gray-500">₹600 each</p>
+
+            <div class="flex items-center gap-3 mt-3">
+              <button class="w-8 h-8 border rounded hover:bg-gray-100">−</button>
+              <span class="px-3 py-1 border rounded">2</span>
+              <button class="w-8 h-8 border rounded hover:bg-gray-100">+</button>
+            </div>
+          </div>
+
+          <div class="text-right">
+            <p class="font-semibold text-indigo-600">₹1,200</p>
+            <button class="text-sm text-red-500 hover:underline mt-2">Remove</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- RIGHT: Order Summary -->
+      <div class="border rounded-lg p-6 h-fit">
+        <h2 class="text-xl font-semibold mb-6">Order Summary</h2>
+
+        <div class="space-y-3 text-sm">
+          <div class="flex justify-between">
+            <span>Subtotal</span>
+            <span>₹1,950</span>
+          </div>
+
+          <div class="flex justify-between">
+            <span>Delivery</span>
+            <span class="text-green-600">Free</span>
+          </div>
+
+          <div class="flex justify-between">
+            <span>Discount</span>
+            <span class="text-red-500">- ₹200</span>
+          </div>
+
+          <hr />
+
+          <div class="flex justify-between font-semibold text-lg">
+            <span>Total</span>
+            <span>₹1,750</span>
+          </div>
+        </div>
+
+        <button class="w-full mt-6 bg-indigo-600 hover:bg-indigo-700 text-white py-3 rounded-lg font-medium">Checkout</button>
+      </div>
+    </div>
+
+    <!-- EMPTY CART UI -->
+    <div class="hidden text-center py-20">
+      <div class="w-24 h-24 mx-auto bg-gray-100 rounded-full mb-6"></div>
+      <h2 class="text-xl font-semibold mb-2">Your cart is empty</h2>
+      <p class="text-gray-500 mb-6">Looks like you haven’t added anything yet</p>
+      <a href="#" class="inline-block bg-indigo-600 text-white px-6 py-3 rounded-lg">Continue Shopping</a>
+    </div>
+  </div>
+{% endblock %}

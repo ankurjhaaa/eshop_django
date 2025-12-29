@@ -32,7 +32,7 @@
         <!-- Menu -->
         <nav class="hidden md:flex space-x-6 text-sm font-medium">
           <a href="{% url 'home' %}" class="text-indigo-600">Home</a>
-          <a href="#" class="text-gray-600 hover:text-black">Shop</a>
+          <a href="{% url 'shop' %}" class="text-gray-600 hover:text-black">Shop</a>
           <a href="#" class="text-gray-600 hover:text-black">Categories</a>
           <a href="#" class="text-gray-600 hover:text-black">Contact</a>
         </nav>
@@ -45,10 +45,10 @@
             <a href="{% url 'login' %}" class="text-sm text-gray-600 hover:text-black">Login</a>
           {% endif %}
 
-          <button class="relative text-lg">
+          <a href="{% url 'cart' %}" class="relative text-lg">
             🛒
             <span class="absolute -top-2 -right-2 bg-red-500 text-white text-xs px-1 rounded-full">0</span>
-          </button>
+          </a>
         </div>
       </div>
     </header>
