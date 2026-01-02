@@ -27,7 +27,7 @@
       <!-- Category Card -->
 
       {% for category in categories %}
-        <a href="/shop?category={{category.slug}}" class="min-w-[120px] bg-white rounded-xl shadow-sm px-3 py-4 text-center hover:shadow-md transition cursor-pointer"><h3 class="font-semibold text-sm">{{ category.name }}</h3></a>
+        <a href="/shop?category={{ category.slug }}" class="min-w-[120px] bg-white rounded-xl shadow-sm px-3 py-4 text-center hover:shadow-md transition cursor-pointer"><h3 class="font-semibold text-sm">{{ category.name }}</h3></a>
       {% endfor %}
     </div>
   </section>
@@ -35,7 +35,7 @@
   <section class="max-w-7xl mx-auto px-4 pb-16">
     <div class="flex items-center justify-between mb-6">
       <h2 class="text-2xl font-bold">Featured Products</h2>
-      <a href="#" class="text-indigo-600 text-sm font-medium hover:underline">View All</a>
+      <a href="{% url 'shop' %}" class="text-indigo-600 text-sm font-medium hover:underline">View All</a>
     </div>
 
     <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
@@ -49,9 +49,12 @@
                 <img src="{{ product.image.url }}" class="w-full h-52 object-cover" />
               {% endif %}
             </a>
-
-            <!-- Wishlist -->
-            <button class="absolute top-3 right-3 bg-white rounded-full p-2 shadow hover:bg-red-50">❤️</button>
+            
+            {% if product.id in wishlist %}
+              <a href="{% url 'wishlistfunction' %}?product_id={{ product.id }}" class="absolute top-3 right-3 bg-white rounded-full p-2 shadow hover:bg-red-50 transition" title="Remove from wishlist"><i class="fa-solid fa-heart text-red-500 text-lg"></i></a>
+            {% else %}
+              <a href="{% url 'wishlistfunction' %}?product_id={{ product.id }}" class="absolute top-3 right-3 bg-white rounded-full p-2 shadow hover:bg-red-50 transition" title="Add to wishlist"><i class="fa-solid fa-heart text-grey-500 text-lg"></i></a>
+            {% endif %}
           </div>
 
           <div class="p-4">

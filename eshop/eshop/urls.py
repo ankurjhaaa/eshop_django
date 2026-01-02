@@ -7,7 +7,8 @@ from eshopapp.views import (
     logoutpage,
     productview,
     cartpage,
-    shoppage
+    shoppage,
+    wishlistfunction
 )
 from django.conf import settings
 from django.conf.urls.static import static
@@ -21,4 +22,5 @@ urlpatterns = [
     path("view/<slug:slug>/", productview, name="productview"),
     path("cart/", cartpage, name="cart"),
     path("shop/", shoppage, name="shop"),
+    path("wishlistfunction/",wishlistfunction,name="wishlistfunction")
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

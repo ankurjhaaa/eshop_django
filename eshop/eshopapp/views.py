@@ -1,15 +1,22 @@
-from django.shortcuts import render, redirect
-from .models import Category, Product
+from django.shortcuts import render, redirect, HttpResponse
+from .models import Category, Product, Wishlist
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate, login, logout
 
 
 # Create your views here.
 def homepage(request):
+    products = Product.objects.all()
+    categories = Category.objects.all()
+    wishlist = []
+    
+    if request.user.is_authenticated:
+        wishlist = Wishlist.objects.filter(user_id = request.user).values_list('product_id_id',flat=True)
+        
     return render(
         request,
         "public/home.html",
-        {"categories": Category.objects.all(), "products": Product.objects.all()},
+        {"categories": categories, "products": products,"wishlist" : wishlist},
     )
 
 
@@ -48,17 +55,43 @@ def cartpage(request):
 
 
 def productview(request, slug):
+    product = Product.objects.filter(slug=slug).first()
+    user_id = request.user
+    isWishlist = Wishlist.objects.filter(user_id=user_id, product_id=product).first()
     return render(
         request,
         "public/productview.html",
-        {"product": Product.objects.filter(slug=slug).first},
+        {"product": product, "isWishlist": isWishlist},
     )
 
 
 def shoppage(request):
     products = Product.objects.all()
+    categories = Category.objects.all()
     categoryFilter = request.GET.get("category")
+    searchFilter = request.GET.get("search")
     if categoryFilter:
-        catId = Category.objects.filter(slug=categoryFilter)
+        catId = Category.objects.filter(slug=categoryFilter).first()
         products = Product.objects.filter(cat_id=catId)
-    return render(request, "public/shop.html", {"products": products})
+    if searchFilter:
+        products = Product.objects.filter(name__icontains=searchFilter)
+
+    countTotal = products.count()
+    return render(
+        request,
+        "public/shop.html",
+        {"products": products, "categories": categories, "countTotal": countTotal},
+    )
+
+
+def wishlistfunction(request):
+    product_id = request.GET.get("product_id")
+    product = Product.objects.filter(id=product_id).first()
+    user_id = request.user
+    checkLiked = Wishlist.objects.filter(user_id=user_id, product_id=product_id).first()
+    if checkLiked:
+        checkLiked.delete()
+    else:
+        Wishlist.objects.create(user_id=user_id, product_id=product)
+
+    return redirect(request.META.get("HTTP_REFERER", "home"))

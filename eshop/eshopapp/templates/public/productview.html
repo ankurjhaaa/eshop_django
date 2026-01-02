@@ -8,21 +8,21 @@
   <section class="max-w-7xl mx-auto px-4 py-10">
     <div class="grid grid-cols-1 md:grid-cols-2 gap-10">
       <div class="bg-white rounded-2xl shadow-sm p-4">
-        <img src="{{product.image.url}}" alt="Product Image" class="w-full h-[420px] object-cover rounded-xl" />
+        <img src="{{ product.image.url }}" alt="Product Image" class="w-full h-[420px] object-cover rounded-xl" />
       </div>
 
       <div class="bg-white rounded-2xl shadow-sm p-6">
-        <p class="text-sm text-indigo-600 font-medium mb-2">{{product.cat_id}}</p>
+        <p class="text-sm text-indigo-600 font-medium mb-2">{{ product.cat_id }}</p>
 
-        <h1 class="text-3xl font-bold mb-3">{{product.name}}</h1>
+        <h1 class="text-3xl font-bold mb-3">{{ product.name }}</h1>
 
         <div class="flex items-center gap-2 text-sm text-gray-500 mb-4">
           ⭐⭐⭐⭐☆ <span>(124 reviews)</span>
         </div>
 
         <div class="flex items-center gap-3 mb-5">
-          <span class="text-3xl font-bold text-indigo-600">₹{{product.selling_price}}</span>
-          <span class="text-gray-400 line-through">₹{{product.mrp}}</span>
+          <span class="text-3xl font-bold text-indigo-600">₹{{ product.selling_price }}</span>
+          <span class="text-gray-400 line-through">₹{{ product.mrp }}</span>
           <span class="text-green-600 text-sm font-medium">25% OFF</span>
         </div>
 
@@ -45,7 +45,11 @@
         <div class="flex gap-4">
           <button class="flex-1 bg-indigo-600 text-white py-3 rounded-xl font-semibold hover:bg-indigo-700 transition">Add to Cart</button>
 
-          <button class="flex items-center justify-center px-4 py-3 rounded-xl border hover:bg-gray-100 transition">❤️</button>
+          {% if isWishlist %}
+          <a href="{% url 'wishlistfunction' %}?product_id={{ product.id }}" class="flex items-center justify-center px-4 py-3 rounded-xl border hover:bg-gray-100 transition"><i class="fa-solid fa-heart text-red-500 text-lg"></i></a>
+          {% else %}
+          <a href="{% url 'wishlistfunction' %}?product_id={{ product.id }}" class="flex items-center justify-center px-4 py-3 rounded-xl border hover:bg-gray-100 transition"><i class="fa-solid fa-heart text-gray-500 text-lg"></i></a>
+          {% endif %}
         </div>
       </div>
     </div>
