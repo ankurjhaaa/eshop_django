@@ -36,19 +36,25 @@
         <div class="flex items-center gap-4 mb-6">
           <span class="font-medium">Quantity</span>
           <div class="flex items-center border rounded-lg">
-            <button class="px-3 py-1 text-lg">−</button>
-            <span class="px-4">1</span>
-            <button class="px-3 py-1 text-lg">+</button>
+            <a href="{% url 'cartFunction' %}?product_id={{ product.id }}&action=minus" class="px-3 py-1 text-lg">−</a>
+            <span class="px-4">{{ cartQty }}</span>
+            <a href="{% url 'cartFunction' %}?product_id={{ product.id }}&action=plus" class="px-3 py-1 text-lg">+</a>
           </div>
         </div>
 
         <div class="flex gap-4">
-          <button class="flex-1 bg-indigo-600 text-white py-3 rounded-xl font-semibold hover:bg-indigo-700 transition">Add to Cart</button>
+          <a href="{% url 'cartFunction' %}?product_id={{ product.id }}&action=plus" class="flex-1 bg-indigo-600 text-center text-white py-3 rounded-xl font-semibold hover:bg-indigo-700 transition">
+            {% if cartQty > 0 %}
+              Cart Added
+            {% else %}
+              Add to Cart
+            {% endif %}
+          </a>
 
           {% if isWishlist %}
-          <a href="{% url 'wishlistfunction' %}?product_id={{ product.id }}" class="flex items-center justify-center px-4 py-3 rounded-xl border hover:bg-gray-100 transition"><i class="fa-solid fa-heart text-red-500 text-lg"></i></a>
+            <a href="{% url 'wishlistfunction' %}?product_id={{ product.id }}" class="flex items-center justify-center px-4 py-3 rounded-xl border hover:bg-gray-100 transition"><i class="fa-solid fa-heart text-red-500 text-lg"></i></a>
           {% else %}
-          <a href="{% url 'wishlistfunction' %}?product_id={{ product.id }}" class="flex items-center justify-center px-4 py-3 rounded-xl border hover:bg-gray-100 transition"><i class="fa-solid fa-heart text-gray-500 text-lg"></i></a>
+            <a href="{% url 'wishlistfunction' %}?product_id={{ product.id }}" class="flex items-center justify-center px-4 py-3 rounded-xl border hover:bg-gray-100 transition"><i class="fa-solid fa-heart text-gray-500 text-lg"></i></a>
           {% endif %}
         </div>
       </div>

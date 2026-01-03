@@ -1,6 +1,6 @@
 from django.db import models
 from django.conf import settings
-
+from django.contrib.auth.models import User
 # Create your models here.
 
 
@@ -39,3 +39,14 @@ class Wishlist(models.Model):
     product_id = models.ForeignKey(
         Product, on_delete=models.CASCADE, related_name="product"
     )
+
+
+class Cart(models.Model):
+    poduct_id = models.ForeignKey(
+        Product, on_delete=models.CASCADE, related_name="product_id"
+    )
+    user_id = models.ForeignKey(
+        User,on_delete=models.CASCADE,related_name="user"
+    )
+    status = models.CharField(max_length=200)
+    qty = models.IntegerField()

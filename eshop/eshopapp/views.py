@@ -1,7 +1,11 @@
 from django.shortcuts import render, redirect, HttpResponse
-from .models import Category, Product, Wishlist
+from .models import Category, Product, Wishlist, Cart
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate, login, logout
+from rest_framework.decorators import api_view
+from rest_framework.response import Response
+from rest_framework import viewsets, permissions
+from .serializers import ProductSerializers, CategorySerializers
 
 
 # Create your views here.
@@ -9,14 +13,16 @@ def homepage(request):
     products = Product.objects.all()
     categories = Category.objects.all()
     wishlist = []
-    
+
     if request.user.is_authenticated:
-        wishlist = Wishlist.objects.filter(user_id = request.user).values_list('product_id_id',flat=True)
-        
+        wishlist = Wishlist.objects.filter(user_id=request.user).values_list(
+            "product_id_id", flat=True
+        )
+
     return render(
         request,
         "public/home.html",
-        {"categories": categories, "products": products,"wishlist" : wishlist},
+        {"categories": categories, "products": products, "wishlist": wishlist},
     )
 
 
@@ -51,17 +57,24 @@ def logoutpage(request):
 
 
 def cartpage(request):
-    return render(request, "public/cart.html")
+    cartProducts = Cart.objects.filter(user_id=request.user)
+    return render(request, "public/cart.html", {"cartProducts": cartProducts})
 
 
 def productview(request, slug):
     product = Product.objects.filter(slug=slug).first()
     user_id = request.user
     isWishlist = Wishlist.objects.filter(user_id=user_id, product_id=product).first()
+    cart = Cart.objects.filter(poduct_id=product, user_id=user_id).first()
+    if cart:
+        cartQty = cart.qty
+    else:
+        cartQty = 0
+
     return render(
         request,
         "public/productview.html",
-        {"product": product, "isWishlist": isWishlist},
+        {"product": product, "isWishlist": isWishlist, "cartQty": cartQty},
     )
 
 
@@ -95,3 +108,45 @@ def wishlistfunction(request):
         Wishlist.objects.create(user_id=user_id, product_id=product)
 
     return redirect(request.META.get("HTTP_REFERER", "home"))
+
+
+def cartFunction(request):
+    product_id = request.GET.get("product_id")
+    product = Product.objects.filter(id=product_id).first()
+    action = request.GET.get("action")
+    user = request.user
+    checkIsCart = Cart.objects.filter(poduct_id=product_id, user_id=user).first()
+    if checkIsCart:
+        if action == "plus":
+            checkIsCart.qty += 1
+            checkIsCart.save()
+        elif action == "minus":
+            if checkIsCart.qty <= 1:
+                checkIsCart.delete()
+            else:
+                checkIsCart.qty -= 1
+                checkIsCart.save()
+
+    else:
+        if action == "plus":
+            Cart.objects.create(poduct_id=product, user_id=user, qty=1, status="cart")
+        else:
+            return redirect(request.META.get("HTTP_REFERER", "home"))
+    return redirect(request.META.get("HTTP_REFERER", "home"))
+
+
+@api_view(["GET"])
+def test_api(request):
+    return Response({"status": True, "message": "DRF working forst"})
+
+
+class ProductViewSet(viewsets.ModelViewSet):
+    queryset = Product.objects.all()
+    serializer_class = ProductSerializers
+    permission_classes = [permissions.AllowAny]
+
+
+class CategoryViewSet(viewsets.ModelViewSet):
+    queryset = Category.objects.all()
+    serializer_class = CategorySerializers
+    permission_classes = [permissions.AllowAny]
